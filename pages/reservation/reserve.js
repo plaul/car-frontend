@@ -5,14 +5,12 @@ import { sanitizeStringWithTableRows,makeOptions } from "../../utils.js"
 const URL = API_URL + "/cars"
 
 let carIdInput
-let carUsernameInput
 let carReservationDate
 let cars = [];
 export async function initReservation() {
 
   //Initialize nodes used more than once
   carIdInput = document.getElementById("car-id")
-  carUsernameInput = document.getElementById("user-name")
   carReservationDate = document.getElementById("reservation-date")
 
   try {
@@ -53,9 +51,9 @@ async function setupReservationModal(evt) {
   const carToRent = cars.find(car => car.id == id)
   const headerText = `Reserve car: (${carToRent.id}), ${carToRent.brand}, ${carToRent.model}, price: ${carToRent.pricePrDay}`
   document.getElementById("reservation-modal-label").innerText = headerText
+  document.getElementById("user-info").innerText = `HI ${localStorage.getItem("user")}, please select a date for your reservation`
   
   carIdInput.value = id
-  carUsernameInput.value = ""
   carReservationDate.value = ""
   setStatusMsg("", false)
   document.getElementById("btn-reservation").addEventListener("click", reserveCar)
