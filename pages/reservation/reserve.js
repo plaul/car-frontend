@@ -65,7 +65,7 @@ async function reserveCar() {
   const URL = API_URL + "/reservations"
   const reservationRequest = {
     carId : carIdInput.value,
-    userName : carUsernameInput.value,
+    //userName : carUsernameInput.value,
     date : carReservationDate.value
   }
   const fetchOptions = makeOptions("POST",reservationRequest,true)
