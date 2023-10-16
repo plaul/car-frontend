@@ -1,5 +1,5 @@
 import { API_URL } from '../../settings.js'
-import { handleHttpErrors } from '../../utils.js'
+import { handleHttpErrors,showHideSpinner } from '../../utils.js'
 
 
 export function initLogin() {
@@ -21,10 +21,13 @@ async function login() {
     body: JSON.stringify(loginRequest)
   }
   try {
+    showHideSpinner("login-spinner", true)
     const res = await fetch(API_URL + "/auth/login", options).then(r => handleHttpErrors(r))
+    showHideSpinner("login-spinner", false)
     storeLoginDetails(res)
     window.router.navigate("/")
   } catch (err) {
+    showHideSpinner("login-spinner", false)
     document.getElementById("login-fail").innerText = err.message
   }
 }

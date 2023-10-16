@@ -12,6 +12,11 @@ export function renderHtml(template, contentId) {
   content.append(template)
 }
 
+export function showHideSpinner(spinnerId,show){
+  const spinner = document.getElementById(spinnerId)
+  spinner.style.display = show ? "block": "none"
+}
+
 
 /**
  * Loads an external file with an div with the class "template", adds it to the body of your page, and returns
