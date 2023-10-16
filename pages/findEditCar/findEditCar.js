@@ -1,5 +1,5 @@
 import { API_URL } from "../../settings.js"
-import { handleHttpErrors, makeOptions } from "../../utils.js"
+import { handleHttpErrors, makeOptions,showHideSpinner } from "../../utils.js"
 
 const emptyDTO = { id: "", brand: "", model: "", pricePrDay: "", bestDiscount: "" }
 
@@ -30,7 +30,9 @@ async function findCar() {
 
 async function renderCar(id) {
   try {
+    showHideSpinner("spinner", true)
     const carDTO = await fetch(URL + "/" + id, makeOptions("GET", null, true)).then(handleHttpErrors)
+    showHideSpinner("spinner", false)
     const editCarForm = document.getElementById("edit-car-form")
     Object.keys(carDTO).forEach(key => {
       const input = editCarForm.querySelector(`[name=${key}]`)
@@ -38,6 +40,7 @@ async function renderCar(id) {
       input && (input.value = carDTO[key])
     })
   } catch (err) {
+    showHideSpinner("spinner", false)
     const status = document.getElementById("status")
     status.style.color = "red"
     status.style.marginTop = "10px"
