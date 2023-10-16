@@ -3,13 +3,14 @@ import "./navigo_EditedByLars.js"  //Will create the global Navigo, with a few c
 //import "./navigo.min.js"  //Will create the global Navigo object used below
 
 import {
-  setActiveLink, loadHtml, renderHtml} from "./utils.js"
+  setActiveLink, loadHtml, renderHtml
+} from "./utils.js"
 
 import { initReservation } from "./pages/reservation/reserve.js"
 import { initMembers } from "./pages/members/members.js"
 import { initCars } from "./pages/cars/cars.js"
 import { initAddCar } from "./pages/addCar/addCar.js"
-import { initLogin, logout,toggleLoginStatus } from "./pages/login/login.js"
+import { initLogin, logout, toggleLoginStatus } from "./pages/login/login.js"
 import { initSignup } from "./pages/signup/signup.js"
 import { initFindEditCar } from "./pages/findEditCar/findEditCar.js"
 import { initListReservationsAll } from "./pages/showReservations/reservations.js"
@@ -29,8 +30,17 @@ window.addEventListener("load", async () => {
   //If token existed, for example after a refresh, set UI accordingly
   const token = localStorage.getItem("token")
   toggleLoginStatus(token)
-  
- const router = new Navigo("/", { hash: true });
+
+  let router
+  if (window.location.hostname === 'localhost' || window.location.hostname === "127.0.0.1") {
+    console.log('Running locally (using hash (/#):' + window.location.hostname);
+    router = new Navigo("/", { hash: true })
+  } else {
+    console.log('Assume we are on Azure, make sure you have added the staticwebapp.config.json file')
+    router = new Navigo("/")
+  }
+
+
   //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
   window.router = router
 
